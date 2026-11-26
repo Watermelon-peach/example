@@ -14,11 +14,13 @@ namespace Survival
 
         public int CountActive { get; private set; }
         public int CountTotal { get; private set; }
+        public Transform Root => root;
 
-        public SimplePool(T prefab, int prewarm, string rootName)
+        public SimplePool(T prefab, int prewarm, string rootName, Transform parent = null)
         {
             this.prefab = prefab;
-            root = new GameObject(rootName).transform;
+            root = new GameObject(rootName, typeof(RectTransform)).transform;
+            if (parent != null) root.SetParent(parent, false);
             for (int i = 0; i < prewarm; i++)
             {
                 var obj = Create();
@@ -49,5 +51,11 @@ namespace Survival
             free.Push(obj);
             CountActive--;
         }
+    }
+
+    static class HitSort
+    {
+        static readonly IComparer<RaycastHit> ByDistance = Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance));
+        public static void Sort(RaycastHit[] hits, int count) => System.Array.Sort(hits, 0, count, ByDistance);
     }
 }

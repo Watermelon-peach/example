@@ -273,7 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315f7f10f763bad458f89ebdd3007f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Survival.Enemy
-  contactDamage: 10
   attackRange: 1.4
-  attackCooldown: 0.8
+  attackCooldown: 1
   bodyRenderer: {fileID: 7019881914632628347}
