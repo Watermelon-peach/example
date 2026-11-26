@@ -1,0 +1,17 @@
+{
+    "mcpServers":  {
+                       "UnityMCP":  {
+                                        "type":  "stdio",
+                                        "command":  "C:\\Users\\asia\\.local\\bin\\uvx.exe",
+                                        "args":  [
+                                                     "--from",
+                                                     "mcpforunityserver==10.3.0",
+                                                     "python",
+                                                     "-c",
+                                                     "from main import main; main()",
+                                                     "--transport",
+                                                     "stdio"
+                                                 ]
+                                    }
+                   }
+}
