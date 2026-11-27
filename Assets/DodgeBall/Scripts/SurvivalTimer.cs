@@ -10,20 +10,20 @@ namespace DodgeBall
     [RequireComponent(typeof(Text))]
     public class SurvivalTimer : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         Text label;
         int shownSeconds = -1;
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public float ElapsedSeconds { get; private set; }
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -42,7 +42,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         void Refresh()
         {

@@ -10,7 +10,7 @@ namespace Survival
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         const string BestWaveKey = "Survival.BestWave";
         const string BestKillsKey = "Survival.BestKills";
@@ -26,7 +26,7 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public static GameManager Instance { get; private set; }
 
@@ -38,7 +38,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -68,7 +68,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         void OnPlayerDamaged(int amount)
         {

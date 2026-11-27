@@ -9,7 +9,7 @@ namespace Survival
 {
     public class WaveSpawner : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         [Header("References")]
         public Enemy enemyPrefab;
@@ -40,7 +40,7 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public int Wave { get; private set; }
         public int Remaining => toSpawn + alive.Count;
@@ -49,7 +49,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -96,7 +96,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         /// <summary>New enemy types unlock as waves progress.</summary>
         EnemyKind PickKind()

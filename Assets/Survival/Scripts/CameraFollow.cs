@@ -4,7 +4,7 @@ namespace Survival
 {
     public class CameraFollow : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         public Transform target;
         public Vector3 offset = new Vector3(0f, 20f, -11f);
@@ -17,7 +17,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Start() => SnapToTarget();
 
@@ -40,7 +40,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         /// <summary>Adds screen-shake "trauma" (0..1). Shake strength is trauma², so small hits stay subtle.</summary>
         public void Shake(float amount) => trauma = Mathf.Clamp01(trauma + amount);

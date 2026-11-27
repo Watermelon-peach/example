@@ -4,7 +4,7 @@ namespace Survival
 {
     public class EnemyProjectile : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         public float radius = 0.25f;
         public float lifetime = 5f;
@@ -19,7 +19,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Update()
         {
@@ -48,7 +48,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public void Launch(SimplePool<EnemyProjectile> owner, Vector3 dir, float projectileSpeed, int projectileDamage)
         {

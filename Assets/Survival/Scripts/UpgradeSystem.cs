@@ -12,7 +12,7 @@ namespace Survival
     {
         class Upgrade
         {
-            #region 변수
+            #region Variables
 
             public string title;
             public string description;
@@ -22,7 +22,7 @@ namespace Survival
             #endregion
         }
 
-        #region 변수
+        #region Variables
 
         public PlayerController player;
         public PlayerHealth playerHealth;
@@ -36,13 +36,13 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public bool IsOpen { get; private set; }
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -78,7 +78,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         void Add(string title, string description, Action apply, Func<bool> available = null)
         {

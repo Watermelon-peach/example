@@ -8,7 +8,7 @@ namespace Survival
     /// </summary>
     public class SimplePool<T> where T : Component
     {
-        #region 변수
+        #region Variables
 
         readonly T prefab;
         readonly Transform root;
@@ -16,7 +16,7 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public int CountActive { get; private set; }
         public int CountTotal { get; private set; }
@@ -24,7 +24,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public SimplePool(T prefab, int prewarm, string rootName, Transform parent = null)
         {
@@ -67,13 +67,13 @@ namespace Survival
 
     static class HitSort
     {
-        #region 변수
+        #region Variables
 
         static readonly IComparer<RaycastHit> ByDistance = Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance));
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public static void Sort(RaycastHit[] hits, int count) => System.Array.Sort(hits, 0, count, ByDistance);
 

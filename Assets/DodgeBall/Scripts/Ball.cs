@@ -9,7 +9,7 @@ namespace DodgeBall
     [RequireComponent(typeof(Rigidbody))]
     public class Ball : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         [Tooltip("Color once the ball has landed and can no longer hurt the player.")]
         [SerializeField] Color harmlessColor = new Color(0.45f, 0.45f, 0.5f);
@@ -30,13 +30,13 @@ namespace DodgeBall
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public bool IsDangerous { get; private set; } = true;
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -78,7 +78,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         /// <summary>Called by the Spawner right after the ball is created.</summary>
         public void Launch(float initialDownSpeed, Transform landingMarker)

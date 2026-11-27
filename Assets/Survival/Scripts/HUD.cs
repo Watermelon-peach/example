@@ -5,7 +5,7 @@ namespace Survival
 {
     public class HUD : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         public PlayerHealth player;
         public PlayerController playerController;
@@ -44,7 +44,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -102,7 +102,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         void Announce(int wave, bool bossWave)
         {

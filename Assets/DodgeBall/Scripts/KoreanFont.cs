@@ -10,13 +10,13 @@ namespace DodgeBall
     [DefaultExecutionOrder(-50)]
     public class KoreanFont : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         [SerializeField] string[] fontNames = { "Malgun Gothic", "맑은 고딕", "AppleSDGothicNeo", "Noto Sans CJK KR" };
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {

@@ -5,7 +5,7 @@ namespace Survival
     /// <summary>Health orb: bobs in place, gets pulled toward the player when close.</summary>
     public class Pickup : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         public int healAmount = 20;
         public float magnetRange = 4f;
@@ -19,7 +19,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Update()
         {
@@ -54,7 +54,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public void Init(SimplePool<Pickup> owner, Transform target, PlayerHealth health)
         {

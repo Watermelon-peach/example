@@ -10,7 +10,7 @@ namespace DodgeBall
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         [Tooltip("Movement speed in units per second.")]
         [SerializeField] float moveSpeed = 5f;
@@ -23,7 +23,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {

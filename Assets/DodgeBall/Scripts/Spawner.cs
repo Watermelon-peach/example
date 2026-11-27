@@ -9,7 +9,7 @@ namespace DodgeBall
     /// </summary>
     public class Spawner : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         [Header("References")]
         [Tooltip("Ball prefab (needs Rigidbody + Ball).")]
@@ -64,7 +64,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public float CurrentInterval => Mathf.Max(minInterval, startInterval - intervalDecreasePerSecond * elapsed);
         public int CurrentBallsPerDrop => Mathf.Min(maxBallsPerDrop, 1 + Mathf.FloorToInt(elapsed / extraBallEverySeconds));
@@ -72,7 +72,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Start()
         {
@@ -112,7 +112,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         void TrackPlayerVelocity(float dt)
         {

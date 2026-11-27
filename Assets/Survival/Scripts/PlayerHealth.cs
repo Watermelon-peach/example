@@ -5,7 +5,7 @@ namespace Survival
 {
     public class PlayerHealth : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         public int maxHealth = 100;
         public float invulnerableTime = 0.5f;
@@ -23,7 +23,7 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public int Current { get; private set; }
         public bool IsDead => Current <= 0;
@@ -31,7 +31,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -49,7 +49,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public void TakeDamage(int amount)
         {

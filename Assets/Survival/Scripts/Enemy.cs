@@ -11,7 +11,7 @@ namespace Survival
     {
         enum ChargeState { Chasing, Windup, Dashing, Recover }
 
-        #region 변수
+        #region Variables
 
         public float attackRange = 1.4f;
         public float attackCooldown = 1f;
@@ -38,7 +38,7 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public EnemyKind Kind { get; private set; }
         public int Health { get; private set; }
@@ -47,7 +47,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -88,7 +88,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         /// <summary>Called every time the enemy is taken from the pool.</summary>
         public void Spawn(WaveSpawner owner, EnemyKind kind, Vector3 position, float speed, int health, Transform player, PlayerHealth playerHealth)

@@ -12,7 +12,7 @@ namespace Survival
     {
         class FloatingText
         {
-            #region 변수
+            #region Variables
 
             public Text text;
             public Vector3 world;
@@ -22,7 +22,7 @@ namespace Survival
             #endregion
         }
 
-        #region 변수
+        #region Variables
 
         public ParticleSystem sparks;
         public EnemyProjectile enemyProjectilePrefab;
@@ -44,13 +44,13 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public static Effects Instance { get; private set; }
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -91,7 +91,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         Text CreateNumberTemplate()
         {

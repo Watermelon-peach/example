@@ -10,7 +10,7 @@ namespace DodgeBall
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         const string BestTimeKey = "DodgeBall.BestTime";
 
@@ -24,7 +24,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public static GameManager Instance { get; private set; }
 
@@ -33,7 +33,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -57,7 +57,7 @@ namespace DodgeBall
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public void GameOver()
         {

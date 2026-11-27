@@ -18,7 +18,7 @@ namespace Survival.EditorTools
     /// </summary>
     public static class SurvivalSceneBuilder
     {
-        #region 변수
+        #region Variables
 
         const string Root = "Assets/Survival";
         const string ScenePath = Root + "/Scenes/Survival.unity";
@@ -28,7 +28,7 @@ namespace Survival.EditorTools
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         [MenuItem("Tools/Survival/Build Scene")]
         public static void Build()

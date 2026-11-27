@@ -5,7 +5,7 @@ namespace Survival
 {
     public class Bullet : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         public float baseSpeed = 32f;
         public float lifetime = 1.2f;
@@ -23,7 +23,7 @@ namespace Survival
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Update()
         {
@@ -62,7 +62,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public void Launch(SimplePool<Bullet> owner, int bulletDamage, int pierce, float speedMultiplier)
         {

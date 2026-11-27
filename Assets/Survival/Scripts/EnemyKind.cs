@@ -6,7 +6,7 @@ namespace Survival
 
     public struct EnemyStats
     {
-        #region 변수
+        #region Variables
 
         public float scale;
         public float healthMul;
@@ -19,7 +19,7 @@ namespace Survival
 
     public static class EnemyCatalog
     {
-        #region 커스텀 메서드
+        #region Custom Methods
 
         public static EnemyStats Get(EnemyKind kind)
         {

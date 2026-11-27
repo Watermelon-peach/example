@@ -6,7 +6,7 @@ namespace Survival
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
-        #region 변수
+        #region Variables
 
         [Header("Stats (modified by upgrades)")]
         public float moveSpeed = 7f;
@@ -43,14 +43,14 @@ namespace Survival
 
         #endregion
 
-        #region 프로퍼티
+        #region Properties
 
         public bool IsDashing => Time.time < dashEndTime;
         public float DashReadiness => dashCooldown <= 0f ? 1f : Mathf.Clamp01(1f - (dashReadyTime - Time.time) / dashCooldown);
 
         #endregion
 
-        #region 유니티 이벤트 메서드
+        #region Unity Event Methods
 
         void Awake()
         {
@@ -73,7 +73,7 @@ namespace Survival
 
         #endregion
 
-        #region 커스텀 메서드
+        #region Custom Methods
 
         void Move()
         {

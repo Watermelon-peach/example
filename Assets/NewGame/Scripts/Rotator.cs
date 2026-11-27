@@ -5,14 +5,14 @@ using UnityEngine;
 /// </summary>
 public class Rotator : MonoBehaviour
 {
-    #region 변수
+    #region Variables
 
     [Tooltip("Rotation speed in degrees per second (negative = reverse direction).")]
     [SerializeField] float degreesPerSecond = 90f;
 
     #endregion
 
-    #region 유니티 이벤트 메서드
+    #region Unity Event Methods
 
     void Update()
     {
