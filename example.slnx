@@ -1,4 +1,6 @@
 ﻿<Solution>
+  <Project Path="Saessak.Language.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Saessak.Language.Tests.csproj" />
 </Solution>
