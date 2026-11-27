@@ -10,6 +10,10 @@ namespace Survival
     [RequireComponent(typeof(NavMeshSurface))]
     public class RuntimeNavMeshBaker : MonoBehaviour
     {
+        #region Unity Event Methods
+
         void Awake() => GetComponent<NavMeshSurface>().BuildNavMesh();
+
+        #endregion
     }
 }

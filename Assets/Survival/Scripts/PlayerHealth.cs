@@ -5,14 +5,14 @@ namespace Survival
 {
     public class PlayerHealth : MonoBehaviour
     {
+        #region Variables
+
         public int maxHealth = 100;
-        public float invulnerableTime = 0.25f;
+        public float invulnerableTime = 0.5f;
         public Renderer bodyRenderer;
 
-        public int Current { get; private set; }
-        public bool IsDead => Current <= 0;
-
         public event Action<int, int> OnChanged;
+        public event Action<int> OnDamaged;
         public event Action OnDied;
 
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
@@ -21,22 +21,23 @@ namespace Survival
         float invulnerableUntil;
         float flashTimer;
 
+        #endregion
+
+        #region Properties
+
+        public int Current { get; private set; }
+        public bool IsDead => Current <= 0;
+        public bool IsInvulnerable => Time.time < invulnerableUntil;
+
+        #endregion
+
+        #region Unity Event Methods
+
         void Awake()
         {
             Current = maxHealth;
             block = new MaterialPropertyBlock();
             if (bodyRenderer != null) baseColor = bodyRenderer.sharedMaterial.GetColor(BaseColorId);
-        }
-
-        public void TakeDamage(int amount)
-        {
-            if (IsDead || Time.time < invulnerableUntil) return;
-            Current = Mathf.Max(0, Current - amount);
-            invulnerableUntil = Time.time + invulnerableTime;
-            flashTimer = 0.12f;
-            SetColor(new Color(1f, 0.35f, 0.35f));
-            OnChanged?.Invoke(Current, maxHealth);
-            if (IsDead) OnDied?.Invoke();
         }
 
         void Update()
@@ -46,6 +47,41 @@ namespace Survival
             if (flashTimer <= 0f) SetColor(baseColor);
         }
 
+        #endregion
+
+        #region Custom Methods
+
+        public void TakeDamage(int amount)
+        {
+            if (IsDead || IsInvulnerable) return;
+            Current = Mathf.Max(0, Current - amount);
+            invulnerableUntil = Time.time + invulnerableTime;
+            flashTimer = 0.12f;
+            SetColor(new Color(1f, 0.35f, 0.35f));
+            OnDamaged?.Invoke(amount);
+            OnChanged?.Invoke(Current, maxHealth);
+            if (IsDead) OnDied?.Invoke();
+        }
+
+        public void Heal(int amount)
+        {
+            if (IsDead || amount <= 0) return;
+            Current = Mathf.Min(maxHealth, Current + amount);
+            OnChanged?.Invoke(Current, maxHealth);
+        }
+
+        public void IncreaseMax(int amount)
+        {
+            maxHealth += amount;
+            Heal(amount);
+            OnChanged?.Invoke(Current, maxHealth);
+        }
+
+        public void SetInvulnerable(float duration)
+        {
+            invulnerableUntil = Mathf.Max(invulnerableUntil, Time.time + duration);
+        }
+
         void SetColor(Color c)
         {
             if (bodyRenderer == null) return;
@@ -53,5 +89,7 @@ namespace Survival
             block.SetColor(BaseColorId, c);
             bodyRenderer.SetPropertyBlock(block);
         }
+
+        #endregion
     }
 }

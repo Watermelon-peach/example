@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Survival/Scenes/Survival.unity
     guid: 1ea38c582d6e7f843bcdae68af9ada10
+  - enabled: 1
+    path: Assets/DodgeBall/Scenes/DodgeBall.unity
+    guid: 2b4f4833d77f43e4cbd66a461d83e47f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

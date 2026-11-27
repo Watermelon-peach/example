@@ -103,7 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cef496b94232d884cbf05c249d2a8b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Survival.Bullet
-  speed: 32
+  baseSpeed: 32
   lifetime: 1.2
-  damage: 1
   radius: 0.15
