@@ -9,6 +9,8 @@ namespace Survival
 {
     public class WaveSpawner : MonoBehaviour
     {
+        #region 변수
+
         [Header("References")]
         public Enemy enemyPrefab;
         public Transform player;
@@ -28,11 +30,6 @@ namespace Survival
         public int maxAlive = 60;
         public int bossEvery = 5;
 
-        public int Wave { get; private set; }
-        public int Remaining => toSpawn + alive.Count;
-        public float CurrentSpeed { get; private set; }
-        public Enemy CurrentBoss { get; private set; }
-
         /// <summary>(wave number, is boss wave)</summary>
         public event Action<int, bool> OnWaveStarted;
 
@@ -40,6 +37,19 @@ namespace Survival
         SimplePool<Enemy> pool;
         PlayerHealth playerHealth;
         int toSpawn;
+
+        #endregion
+
+        #region 프로퍼티
+
+        public int Wave { get; private set; }
+        public int Remaining => toSpawn + alive.Count;
+        public float CurrentSpeed { get; private set; }
+        public Enemy CurrentBoss { get; private set; }
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -83,6 +93,10 @@ namespace Survival
                 yield return new WaitForSeconds(timeBetweenWaves);
             }
         }
+
+        #endregion
+
+        #region 커스텀 메서드
 
         /// <summary>New enemy types unlock as waves progress.</summary>
         EnemyKind PickKind()
@@ -157,5 +171,7 @@ namespace Survival
                 }
             }
         }
+
+        #endregion
     }
 }

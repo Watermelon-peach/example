@@ -5,13 +5,11 @@ namespace Survival
 {
     public class PlayerHealth : MonoBehaviour
     {
+        #region 변수
+
         public int maxHealth = 100;
         public float invulnerableTime = 0.5f;
         public Renderer bodyRenderer;
-
-        public int Current { get; private set; }
-        public bool IsDead => Current <= 0;
-        public bool IsInvulnerable => Time.time < invulnerableUntil;
 
         public event Action<int, int> OnChanged;
         public event Action<int> OnDamaged;
@@ -23,12 +21,35 @@ namespace Survival
         float invulnerableUntil;
         float flashTimer;
 
+        #endregion
+
+        #region 프로퍼티
+
+        public int Current { get; private set; }
+        public bool IsDead => Current <= 0;
+        public bool IsInvulnerable => Time.time < invulnerableUntil;
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
+
         void Awake()
         {
             Current = maxHealth;
             block = new MaterialPropertyBlock();
             if (bodyRenderer != null) baseColor = bodyRenderer.sharedMaterial.GetColor(BaseColorId);
         }
+
+        void Update()
+        {
+            if (flashTimer <= 0f) return;
+            flashTimer -= Time.unscaledDeltaTime;
+            if (flashTimer <= 0f) SetColor(baseColor);
+        }
+
+        #endregion
+
+        #region 커스텀 메서드
 
         public void TakeDamage(int amount)
         {
@@ -61,13 +82,6 @@ namespace Survival
             invulnerableUntil = Mathf.Max(invulnerableUntil, Time.time + duration);
         }
 
-        void Update()
-        {
-            if (flashTimer <= 0f) return;
-            flashTimer -= Time.unscaledDeltaTime;
-            if (flashTimer <= 0f) SetColor(baseColor);
-        }
-
         void SetColor(Color c)
         {
             if (bodyRenderer == null) return;
@@ -75,5 +89,7 @@ namespace Survival
             block.SetColor(BaseColorId, c);
             bodyRenderer.SetPropertyBlock(block);
         }
+
+        #endregion
     }
 }

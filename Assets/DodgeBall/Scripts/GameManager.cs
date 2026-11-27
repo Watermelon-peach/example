@@ -10,7 +10,7 @@ namespace DodgeBall
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; }
+        #region 변수
 
         const string BestTimeKey = "DodgeBall.BestTime";
 
@@ -22,8 +22,18 @@ namespace DodgeBall
         [SerializeField] Text resultText;
         [SerializeField] Button restartButton;
 
+        #endregion
+
+        #region 프로퍼티
+
+        public static GameManager Instance { get; private set; }
+
         public bool IsGameOver { get; private set; }
         public static float BestTime => PlayerPrefs.GetFloat(BestTimeKey, 0f);
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -44,6 +54,10 @@ namespace DodgeBall
             var keyboard = Keyboard.current;
             if (IsGameOver && keyboard != null && keyboard.rKey.wasPressedThisFrame) Restart();
         }
+
+        #endregion
+
+        #region 커스텀 메서드
 
         public void GameOver()
         {
@@ -78,5 +92,7 @@ namespace DodgeBall
             Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+        #endregion
     }
 }

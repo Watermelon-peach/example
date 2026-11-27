@@ -5,6 +5,8 @@ namespace Survival
 {
     public class HUD : MonoBehaviour
     {
+        #region 변수
+
         public PlayerHealth player;
         public PlayerController playerController;
         public WaveSpawner spawner;
@@ -40,6 +42,10 @@ namespace Survival
         float announceTimer;
         float damageFlash;
 
+        #endregion
+
+        #region 유니티 이벤트 메서드
+
         void Awake()
         {
             // The built-in legacy font has no Hangul glyphs; use the Windows Korean font when available.
@@ -62,24 +68,6 @@ namespace Survival
             bestText.text = GameManager.BestWave > 0 ? $"최고 기록  웨이브 {GameManager.BestWave}" : "";
             SetKills(0);
         }
-
-        void Announce(int wave, bool bossWave)
-        {
-            waveText.text = $"WAVE {wave}";
-            // No <color> tags here: rich-text colors ignore Text.color alpha, which would break the fade-out.
-            announceText.text = bossWave ? $"WAVE {wave}\n<size=60>BOSS 출현!</size>" : $"WAVE {wave}";
-            announceText.color = bossWave ? BossAnnounce : WaveAnnounce;
-            announceTimer = 2.2f;
-        }
-
-        void UpdateHealth(int current, int max)
-        {
-            float f = max > 0 ? (float)current / max : 0f;
-            healthFill.anchorMax = new Vector2(f, 1f);
-            healthText.text = $"{current} / {max}";
-        }
-
-        public void FlashDamage() => damageFlash = 0.35f;
 
         void Update()
         {
@@ -112,6 +100,28 @@ namespace Survival
             }
         }
 
+        #endregion
+
+        #region 커스텀 메서드
+
+        void Announce(int wave, bool bossWave)
+        {
+            waveText.text = $"WAVE {wave}";
+            // No <color> tags here: rich-text colors ignore Text.color alpha, which would break the fade-out.
+            announceText.text = bossWave ? $"WAVE {wave}\n<size=60>BOSS 출현!</size>" : $"WAVE {wave}";
+            announceText.color = bossWave ? BossAnnounce : WaveAnnounce;
+            announceTimer = 2.2f;
+        }
+
+        void UpdateHealth(int current, int max)
+        {
+            float f = max > 0 ? (float)current / max : 0f;
+            healthFill.anchorMax = new Vector2(f, 1f);
+            healthText.text = $"{current} / {max}";
+        }
+
+        public void FlashDamage() => damageFlash = 0.35f;
+
         public void SetKills(int kills) => killsText.text = $"처치  {kills}";
 
         public void ShowGameOver(int wave, int kills, bool newRecord)
@@ -122,5 +132,7 @@ namespace Survival
                 : $"최고 기록: 웨이브 {GameManager.BestWave} · {GameManager.BestKills}마리";
             gameOverStats.text = $"웨이브 {wave} 도달  ·  {kills}마리 처치\n<size=30>{record}</size>\n<size=24>R 키 또는 아래 버튼으로 재시작</size>";
         }
+
+        #endregion
     }
 }

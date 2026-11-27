@@ -10,6 +10,8 @@ namespace DodgeBall
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : MonoBehaviour
     {
+        #region 변수
+
         [Tooltip("Movement speed in units per second.")]
         [SerializeField] float moveSpeed = 5f;
 
@@ -18,6 +20,10 @@ namespace DodgeBall
 
         Rigidbody body;
         Vector3 inputDirection;
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -52,5 +58,7 @@ namespace DodgeBall
             next.z = Mathf.Clamp(next.z, -boundsHalfSize.y, boundsHalfSize.y);
             body.MovePosition(next);
         }
+
+        #endregion
     }
 }

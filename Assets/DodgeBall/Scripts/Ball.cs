@@ -9,6 +9,8 @@ namespace DodgeBall
     [RequireComponent(typeof(Rigidbody))]
     public class Ball : MonoBehaviour
     {
+        #region 변수
+
         [Tooltip("Color once the ball has landed and can no longer hurt the player.")]
         [SerializeField] Color harmlessColor = new Color(0.45f, 0.45f, 0.5f);
 
@@ -16,8 +18,6 @@ namespace DodgeBall
         [SerializeField] float vanishTime = 0.8f;
 
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
-
-        public bool IsDangerous { get; private set; } = true;
 
         Rigidbody body;
         Renderer meshRenderer;
@@ -28,25 +28,21 @@ namespace DodgeBall
         float groundHeight;
         float vanishTimer = -1f;
 
+        #endregion
+
+        #region 프로퍼티
+
+        public bool IsDangerous { get; private set; } = true;
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
+
         void Awake()
         {
             body = GetComponent<Rigidbody>();
             meshRenderer = GetComponent<Renderer>();
             startScale = transform.localScale;
-        }
-
-        /// <summary>Called by the Spawner right after the ball is created.</summary>
-        public void Launch(float initialDownSpeed, Transform landingMarker)
-        {
-            body.linearVelocity = Vector3.down * initialDownSpeed;
-            startHeight = transform.position.y;
-            marker = landingMarker;
-            if (marker != null)
-            {
-                markerFullScale = marker.localScale;
-                groundHeight = marker.position.y;
-                UpdateMarker();
-            }
         }
 
         void OnCollisionEnter(Collision collision)
@@ -61,19 +57,6 @@ namespace DodgeBall
 
             // Hit the ground (or another ball): it can't hurt anyone anymore.
             BecomeHarmless();
-        }
-
-        void BecomeHarmless()
-        {
-            IsDangerous = false;
-            vanishTimer = vanishTime;
-
-            var block = new MaterialPropertyBlock();
-            meshRenderer.GetPropertyBlock(block);
-            block.SetColor(BaseColorId, harmlessColor);
-            meshRenderer.SetPropertyBlock(block);
-
-            RemoveMarker();
         }
 
         void Update()
@@ -91,6 +74,39 @@ namespace DodgeBall
             if (transform.position.y < -10f) Destroy(gameObject);
         }
 
+        void OnDestroy() => RemoveMarker();
+
+        #endregion
+
+        #region 커스텀 메서드
+
+        /// <summary>Called by the Spawner right after the ball is created.</summary>
+        public void Launch(float initialDownSpeed, Transform landingMarker)
+        {
+            body.linearVelocity = Vector3.down * initialDownSpeed;
+            startHeight = transform.position.y;
+            marker = landingMarker;
+            if (marker != null)
+            {
+                markerFullScale = marker.localScale;
+                groundHeight = marker.position.y;
+                UpdateMarker();
+            }
+        }
+
+        void BecomeHarmless()
+        {
+            IsDangerous = false;
+            vanishTimer = vanishTime;
+
+            var block = new MaterialPropertyBlock();
+            meshRenderer.GetPropertyBlock(block);
+            block.SetColor(BaseColorId, harmlessColor);
+            meshRenderer.SetPropertyBlock(block);
+
+            RemoveMarker();
+        }
+
         /// <summary>The landing marker grows as the ball gets closer to the ground.</summary>
         void UpdateMarker()
         {
@@ -105,6 +121,6 @@ namespace DodgeBall
             marker = null;
         }
 
-        void OnDestroy() => RemoveMarker();
+        #endregion
     }
 }

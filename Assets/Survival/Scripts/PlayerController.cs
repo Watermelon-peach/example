@@ -6,6 +6,8 @@ namespace Survival
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
+        #region 변수
+
         [Header("Stats (modified by upgrades)")]
         public float moveSpeed = 7f;
         public float fireInterval = 0.13f;
@@ -39,8 +41,16 @@ namespace Survival
         float dashReadyTime;
         Vector3 dashDirection;
 
+        #endregion
+
+        #region 프로퍼티
+
         public bool IsDashing => Time.time < dashEndTime;
         public float DashReadiness => dashCooldown <= 0f ? 1f : Mathf.Clamp01(1f - (dashReadyTime - Time.time) / dashCooldown);
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -60,6 +70,10 @@ namespace Survival
             Move();
             AimAndShoot();
         }
+
+        #endregion
+
+        #region 커스텀 메서드
 
         void Move()
         {
@@ -147,5 +161,7 @@ namespace Survival
                 fx.Shake(0.035f);
             }
         }
+
+        #endregion
     }
 }

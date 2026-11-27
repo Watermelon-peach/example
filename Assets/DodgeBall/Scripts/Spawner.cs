@@ -9,6 +9,8 @@ namespace DodgeBall
     /// </summary>
     public class Spawner : MonoBehaviour
     {
+        #region 변수
+
         [Header("References")]
         [Tooltip("Ball prefab (needs Rigidbody + Ball).")]
         [SerializeField] Ball ballPrefab;
@@ -60,9 +62,17 @@ namespace DodgeBall
         Vector3 lastPlayerPosition;
         Vector3 playerVelocity;
 
+        #endregion
+
+        #region 프로퍼티
+
         public float CurrentInterval => Mathf.Max(minInterval, startInterval - intervalDecreasePerSecond * elapsed);
         public int CurrentBallsPerDrop => Mathf.Min(maxBallsPerDrop, 1 + Mathf.FloorToInt(elapsed / extraBallEverySeconds));
         public float CurrentFallSpeed => Mathf.Min(maxInitialFallSpeed, fallSpeedPerSecond * elapsed);
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Start()
         {
@@ -99,6 +109,10 @@ namespace DodgeBall
                 }
             }
         }
+
+        #endregion
+
+        #region 커스텀 메서드
 
         void TrackPlayerVelocity(float dt)
         {
@@ -160,5 +174,7 @@ namespace DodgeBall
             Ball ball = Instantiate(ballPrefab, new Vector3(landing.x, groundHeight + spawnHeight, landing.z), Quaternion.identity);
             ball.Launch(CurrentFallSpeed, marker);
         }
+
+        #endregion
     }
 }

@@ -10,7 +10,7 @@ namespace Survival
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; }
+        #region 변수
 
         const string BestWaveKey = "Survival.BestWave";
         const string BestKillsKey = "Survival.BestKills";
@@ -21,14 +21,24 @@ namespace Survival
         public HUD hud;
         public UpgradeSystem upgrades;
 
+        PlayerController playerController;
+        float hitStopUntil;
+
+        #endregion
+
+        #region 프로퍼티
+
+        public static GameManager Instance { get; private set; }
+
         public int Kills { get; private set; }
         public bool IsGameOver { get; private set; }
         public bool IsPaused => IsGameOver || (upgrades != null && upgrades.IsOpen);
         public static int BestWave => PlayerPrefs.GetInt(BestWaveKey, 0);
         public static int BestKills => PlayerPrefs.GetInt(BestKillsKey, 0);
 
-        PlayerController playerController;
-        float hitStopUntil;
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -48,6 +58,18 @@ namespace Survival
             player.OnDamaged += OnPlayerDamaged;
         }
 
+        void Update()
+        {
+            Time.timeScale = IsPaused ? 0f : (Time.unscaledTime < hitStopUntil ? HitStopScale : 1f);
+
+            var kb = Keyboard.current;
+            if (IsGameOver && kb != null && kb.rKey.wasPressedThisFrame) Restart();
+        }
+
+        #endregion
+
+        #region 커스텀 메서드
+
         void OnPlayerDamaged(int amount)
         {
             HitStop(0.05f);
@@ -58,14 +80,6 @@ namespace Survival
                 fx.Burst(player.transform.position + Vector3.up, new Color(1f, 0.3f, 0.3f), 10, 5f, 0.7f);
             }
             if (hud != null) hud.FlashDamage();
-        }
-
-        void Update()
-        {
-            Time.timeScale = IsPaused ? 0f : (Time.unscaledTime < hitStopUntil ? HitStopScale : 1f);
-
-            var kb = Keyboard.current;
-            if (IsGameOver && kb != null && kb.rKey.wasPressedThisFrame) Restart();
         }
 
         public void HitStop(float duration)
@@ -108,5 +122,7 @@ namespace Survival
             Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+        #endregion
     }
 }

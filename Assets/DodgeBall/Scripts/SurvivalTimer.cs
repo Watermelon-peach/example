@@ -10,10 +10,20 @@ namespace DodgeBall
     [RequireComponent(typeof(Text))]
     public class SurvivalTimer : MonoBehaviour
     {
-        public float ElapsedSeconds { get; private set; }
+        #region 변수
 
         Text label;
         int shownSeconds = -1;
+
+        #endregion
+
+        #region 프로퍼티
+
+        public float ElapsedSeconds { get; private set; }
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -30,6 +40,10 @@ namespace DodgeBall
             Refresh();
         }
 
+        #endregion
+
+        #region 커스텀 메서드
+
         void Refresh()
         {
             int seconds = Mathf.FloorToInt(ElapsedSeconds);
@@ -37,5 +51,7 @@ namespace DodgeBall
             shownSeconds = seconds;
             label.text = $"생존 시간  {seconds}초";
         }
+
+        #endregion
     }
 }

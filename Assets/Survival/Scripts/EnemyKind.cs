@@ -6,15 +6,21 @@ namespace Survival
 
     public struct EnemyStats
     {
+        #region 변수
+
         public float scale;
         public float healthMul;
         public float speedMul;
         public int damage;
         public Color color;
+
+        #endregion
     }
 
     public static class EnemyCatalog
     {
+        #region 커스텀 메서드
+
         public static EnemyStats Get(EnemyKind kind)
         {
             switch (kind)
@@ -31,5 +37,7 @@ namespace Survival
 
         static EnemyStats Make(float scale, float health, float speed, int damage, Color color) =>
             new EnemyStats { scale = scale, healthMul = health, speedMul = speed, damage = damage, color = color };
+
+        #endregion
     }
 }

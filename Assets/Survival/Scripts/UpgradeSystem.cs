@@ -10,6 +10,20 @@ namespace Survival
     /// <summary>Between waves: pause and offer 3 random upgrades (click or press 1/2/3).</summary>
     public class UpgradeSystem : MonoBehaviour
     {
+        class Upgrade
+        {
+            #region 변수
+
+            public string title;
+            public string description;
+            public Action apply;
+            public Func<bool> available;
+
+            #endregion
+        }
+
+        #region 변수
+
         public PlayerController player;
         public PlayerHealth playerHealth;
         public GameObject panel;
@@ -17,18 +31,18 @@ namespace Survival
         public Text[] titles;
         public Text[] descriptions;
 
-        public bool IsOpen { get; private set; }
-
-        class Upgrade
-        {
-            public string title;
-            public string description;
-            public Action apply;
-            public Func<bool> available;
-        }
-
         readonly List<Upgrade> all = new List<Upgrade>();
         readonly Upgrade[] offered = new Upgrade[3];
+
+        #endregion
+
+        #region 프로퍼티
+
+        public bool IsOpen { get; private set; }
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -52,6 +66,20 @@ namespace Survival
             panel.SetActive(false);
         }
 
+        void Update()
+        {
+            if (!IsOpen) return;
+            var kb = Keyboard.current;
+            if (kb == null) return;
+            if (kb.digit1Key.wasPressedThisFrame || kb.numpad1Key.wasPressedThisFrame) Choose(0);
+            else if (kb.digit2Key.wasPressedThisFrame || kb.numpad2Key.wasPressedThisFrame) Choose(1);
+            else if (kb.digit3Key.wasPressedThisFrame || kb.numpad3Key.wasPressedThisFrame) Choose(2);
+        }
+
+        #endregion
+
+        #region 커스텀 메서드
+
         void Add(string title, string description, Action apply, Func<bool> available = null)
         {
             all.Add(new Upgrade { title = title, description = description, apply = apply, available = available ?? (() => true) });
@@ -72,16 +100,6 @@ namespace Survival
             IsOpen = true;
         }
 
-        void Update()
-        {
-            if (!IsOpen) return;
-            var kb = Keyboard.current;
-            if (kb == null) return;
-            if (kb.digit1Key.wasPressedThisFrame || kb.numpad1Key.wasPressedThisFrame) Choose(0);
-            else if (kb.digit2Key.wasPressedThisFrame || kb.numpad2Key.wasPressedThisFrame) Choose(1);
-            else if (kb.digit3Key.wasPressedThisFrame || kb.numpad3Key.wasPressedThisFrame) Choose(2);
-        }
-
         public void Choose(int index)
         {
             if (!IsOpen) return;
@@ -96,5 +114,7 @@ namespace Survival
                 fx.FloatText(player.transform.position + Vector3.up * 2.5f, offered[index].title, new Color(1f, 0.85f, 0.3f), 36);
             }
         }
+
+        #endregion
     }
 }

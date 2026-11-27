@@ -5,6 +5,8 @@ namespace Survival
 {
     public class Bullet : MonoBehaviour
     {
+        #region 변수
+
         public float baseSpeed = 32f;
         public float lifetime = 1.2f;
         public float radius = 0.15f;
@@ -19,15 +21,9 @@ namespace Survival
         int damage;
         int pierceLeft;
 
-        public void Launch(SimplePool<Bullet> owner, int bulletDamage, int pierce, float speedMultiplier)
-        {
-            pool = owner;
-            damage = bulletDamage;
-            pierceLeft = pierce;
-            speed = baseSpeed * speedMultiplier;
-            age = 0f;
-            alreadyHit.Clear();
-        }
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Update()
         {
@@ -64,10 +60,26 @@ namespace Survival
             if (age >= lifetime) Despawn();
         }
 
+        #endregion
+
+        #region 커스텀 메서드
+
+        public void Launch(SimplePool<Bullet> owner, int bulletDamage, int pierce, float speedMultiplier)
+        {
+            pool = owner;
+            damage = bulletDamage;
+            pierceLeft = pierce;
+            speed = baseSpeed * speedMultiplier;
+            age = 0f;
+            alreadyHit.Clear();
+        }
+
         void Despawn()
         {
             if (pool != null) pool.Release(this);
             else gameObject.SetActive(false);
         }
+
+        #endregion
     }
 }

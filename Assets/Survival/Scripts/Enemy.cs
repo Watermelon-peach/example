@@ -9,14 +9,16 @@ namespace Survival
     [RequireComponent(typeof(NavMeshAgent))]
     public class Enemy : MonoBehaviour
     {
+        enum ChargeState { Chasing, Windup, Dashing, Recover }
+
+        #region 변수
+
         public float attackRange = 1.4f;
         public float attackCooldown = 1f;
         public Renderer bodyRenderer;
 
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
         static readonly Color WindupColor = new Color(1f, 0.95f, 0.3f);
-
-        enum ChargeState { Chasing, Windup, Dashing, Recover }
 
         NavMeshAgent agent;
         MaterialPropertyBlock block;
@@ -34,45 +36,23 @@ namespace Survival
         ChargeState charge;
         Vector3 dashDirection;
 
+        #endregion
+
+        #region 프로퍼티
+
         public EnemyKind Kind { get; private set; }
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
         public bool IsAlive => Health > 0;
 
+        #endregion
+
+        #region 유니티 이벤트 메서드
+
         void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             block = new MaterialPropertyBlock();
-        }
-
-        /// <summary>Called every time the enemy is taken from the pool.</summary>
-        public void Spawn(WaveSpawner owner, EnemyKind kind, Vector3 position, float speed, int health, Transform player, PlayerHealth playerHealth)
-        {
-            var stats = EnemyCatalog.Get(kind);
-            spawner = owner;
-            Kind = kind;
-            target = player;
-            targetHealth = playerHealth;
-            MaxHealth = Health = Mathf.Max(1, health);
-            contactDamage = stats.damage;
-            baseColor = stats.color;
-            baseSpeed = speed;
-
-            transform.localScale = Vector3.one * stats.scale;
-            agent.Warp(position);
-            agent.speed = speed;
-            agent.acceleration = speed * 4f;
-            agent.isStopped = false;
-            agent.stoppingDistance = kind == EnemyKind.Shooter ? 8f : 1.1f * stats.scale;
-            agent.avoidancePriority = kind == EnemyKind.Boss ? 10 : 50;
-
-            repathTimer = 0f;
-            flashTimer = 0f;
-            nextAttackTime = Time.time + 0.5f;
-            actionTimer = kind == EnemyKind.Boss ? 2f : Random.Range(1f, 2.5f);
-            bossPattern = 0;
-            charge = ChargeState.Chasing;
-            SetColor(baseColor);
         }
 
         void Update()
@@ -104,6 +84,40 @@ namespace Survival
                 flashTimer -= dt;
                 if (flashTimer <= 0f) SetColor(CurrentColor());
             }
+        }
+
+        #endregion
+
+        #region 커스텀 메서드
+
+        /// <summary>Called every time the enemy is taken from the pool.</summary>
+        public void Spawn(WaveSpawner owner, EnemyKind kind, Vector3 position, float speed, int health, Transform player, PlayerHealth playerHealth)
+        {
+            var stats = EnemyCatalog.Get(kind);
+            spawner = owner;
+            Kind = kind;
+            target = player;
+            targetHealth = playerHealth;
+            MaxHealth = Health = Mathf.Max(1, health);
+            contactDamage = stats.damage;
+            baseColor = stats.color;
+            baseSpeed = speed;
+
+            transform.localScale = Vector3.one * stats.scale;
+            agent.Warp(position);
+            agent.speed = speed;
+            agent.acceleration = speed * 4f;
+            agent.isStopped = false;
+            agent.stoppingDistance = kind == EnemyKind.Shooter ? 8f : 1.1f * stats.scale;
+            agent.avoidancePriority = kind == EnemyKind.Boss ? 10 : 50;
+
+            repathTimer = 0f;
+            flashTimer = 0f;
+            nextAttackTime = Time.time + 0.5f;
+            actionTimer = kind == EnemyKind.Boss ? 2f : Random.Range(1f, 2.5f);
+            bossPattern = 0;
+            charge = ChargeState.Chasing;
+            SetColor(baseColor);
         }
 
         void Chase(float dt)
@@ -258,5 +272,7 @@ namespace Survival
             block.SetColor(BaseColorId, c);
             bodyRenderer.SetPropertyBlock(block);
         }
+
+        #endregion
     }
 }

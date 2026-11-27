@@ -4,6 +4,8 @@ namespace Survival
 {
     public class CameraFollow : MonoBehaviour
     {
+        #region 변수
+
         public Transform target;
         public Vector3 offset = new Vector3(0f, 20f, -11f);
         public float smoothing = 8f;
@@ -13,10 +15,11 @@ namespace Survival
         Vector3 smoothedPosition;
         float trauma;
 
-        void Start() => SnapToTarget();
+        #endregion
 
-        /// <summary>Adds screen-shake "trauma" (0..1). Shake strength is trauma², so small hits stay subtle.</summary>
-        public void Shake(float amount) => trauma = Mathf.Clamp01(trauma + amount);
+        #region 유니티 이벤트 메서드
+
+        void Start() => SnapToTarget();
 
         void LateUpdate()
         {
@@ -35,6 +38,13 @@ namespace Survival
             transform.position = smoothedPosition + shake;
         }
 
+        #endregion
+
+        #region 커스텀 메서드
+
+        /// <summary>Adds screen-shake "trauma" (0..1). Shake strength is trauma², so small hits stay subtle.</summary>
+        public void Shake(float amount) => trauma = Mathf.Clamp01(trauma + amount);
+
         public void SnapToTarget()
         {
             if (target == null) return;
@@ -42,5 +52,7 @@ namespace Survival
             transform.position = smoothedPosition;
             transform.rotation = Quaternion.LookRotation(-offset);
         }
+
+        #endregion
     }
 }

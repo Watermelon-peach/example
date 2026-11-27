@@ -8,13 +8,23 @@ namespace Survival
     /// </summary>
     public class SimplePool<T> where T : Component
     {
+        #region 변수
+
         readonly T prefab;
         readonly Transform root;
         readonly Stack<T> free = new Stack<T>();
 
+        #endregion
+
+        #region 프로퍼티
+
         public int CountActive { get; private set; }
         public int CountTotal { get; private set; }
         public Transform Root => root;
+
+        #endregion
+
+        #region 커스텀 메서드
 
         public SimplePool(T prefab, int prewarm, string rootName, Transform parent = null)
         {
@@ -51,11 +61,22 @@ namespace Survival
             free.Push(obj);
             CountActive--;
         }
+
+        #endregion
     }
 
     static class HitSort
     {
+        #region 변수
+
         static readonly IComparer<RaycastHit> ByDistance = Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance));
+
+        #endregion
+
+        #region 커스텀 메서드
+
         public static void Sort(RaycastHit[] hits, int count) => System.Array.Sort(hits, 0, count, ByDistance);
+
+        #endregion
     }
 }

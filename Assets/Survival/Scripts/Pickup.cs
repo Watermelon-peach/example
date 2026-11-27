@@ -5,6 +5,8 @@ namespace Survival
     /// <summary>Health orb: bobs in place, gets pulled toward the player when close.</summary>
     public class Pickup : MonoBehaviour
     {
+        #region 변수
+
         public int healAmount = 20;
         public float magnetRange = 4f;
         public float collectRange = 1.1f;
@@ -15,13 +17,9 @@ namespace Survival
         PlayerHealth playerHealth;
         float age;
 
-        public void Init(SimplePool<Pickup> owner, Transform target, PlayerHealth health)
-        {
-            pool = owner;
-            player = target;
-            playerHealth = health;
-            age = 0f;
-        }
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Update()
         {
@@ -53,5 +51,19 @@ namespace Survival
 
             if (age > despawnTime) pool.Release(this);
         }
+
+        #endregion
+
+        #region 커스텀 메서드
+
+        public void Init(SimplePool<Pickup> owner, Transform target, PlayerHealth health)
+        {
+            pool = owner;
+            player = target;
+            playerHealth = health;
+            age = 0f;
+        }
+
+        #endregion
     }
 }

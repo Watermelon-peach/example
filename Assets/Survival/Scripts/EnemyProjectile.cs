@@ -4,6 +4,8 @@ namespace Survival
 {
     public class EnemyProjectile : MonoBehaviour
     {
+        #region 변수
+
         public float radius = 0.25f;
         public float lifetime = 5f;
 
@@ -15,14 +17,9 @@ namespace Survival
         float age;
         int damage;
 
-        public void Launch(SimplePool<EnemyProjectile> owner, Vector3 dir, float projectileSpeed, int projectileDamage)
-        {
-            pool = owner;
-            direction = dir;
-            speed = projectileSpeed;
-            damage = projectileDamage;
-            age = 0f;
-        }
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Update()
         {
@@ -49,6 +46,21 @@ namespace Survival
             if (age >= lifetime) Despawn();
         }
 
+        #endregion
+
+        #region 커스텀 메서드
+
+        public void Launch(SimplePool<EnemyProjectile> owner, Vector3 dir, float projectileSpeed, int projectileDamage)
+        {
+            pool = owner;
+            direction = dir;
+            speed = projectileSpeed;
+            damage = projectileDamage;
+            age = 0f;
+        }
+
         void Despawn() => pool.Release(this);
+
+        #endregion
     }
 }

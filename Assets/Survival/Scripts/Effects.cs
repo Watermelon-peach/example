@@ -10,7 +10,19 @@ namespace Survival
     /// </summary>
     public class Effects : MonoBehaviour
     {
-        public static Effects Instance { get; private set; }
+        class FloatingText
+        {
+            #region 변수
+
+            public Text text;
+            public Vector3 world;
+            public Color color;
+            public float age;
+
+            #endregion
+        }
+
+        #region 변수
 
         public ParticleSystem sparks;
         public EnemyProjectile enemyProjectilePrefab;
@@ -21,14 +33,6 @@ namespace Survival
         public PlayerHealth playerHealth;
         [Range(0f, 1f)] public float pickupChance = 0.07f;
 
-        class FloatingText
-        {
-            public Text text;
-            public Vector3 world;
-            public Color color;
-            public float age;
-        }
-
         const float NumberLifetime = 0.6f;
 
         SimplePool<EnemyProjectile> projectiles;
@@ -37,6 +41,16 @@ namespace Survival
         readonly List<FloatingText> floating = new List<FloatingText>();
         Camera cam;
         float lastKillStop;
+
+        #endregion
+
+        #region 프로퍼티
+
+        public static Effects Instance { get; private set; }
+
+        #endregion
+
+        #region 유니티 이벤트 메서드
 
         void Awake()
         {
@@ -51,6 +65,33 @@ namespace Survival
         {
             if (Instance == this) Instance = null;
         }
+
+        void LateUpdate()
+        {
+            if (cam == null) cam = Camera.main;
+            if (cam == null) return;
+            for (int i = floating.Count - 1; i >= 0; i--)
+            {
+                var f = floating[i];
+                f.age += Time.unscaledDeltaTime;
+                if (f.age >= NumberLifetime)
+                {
+                    numbers.Release(f.text);
+                    floating.RemoveAt(i);
+                    continue;
+                }
+                f.text.transform.position = cam.WorldToScreenPoint(f.world + Vector3.up * (f.age * 1.5f));
+                float k = f.age / NumberLifetime;
+                Color c = f.color;
+                c.a = 1f - k * k;
+                f.text.color = c;
+                f.text.transform.localScale = Vector3.one * (1f + 0.5f * Mathf.Max(0f, 1f - f.age * 8f)); // pop
+            }
+        }
+
+        #endregion
+
+        #region 커스텀 메서드
 
         Text CreateNumberTemplate()
         {
@@ -98,29 +139,6 @@ namespace Survival
             floating.Add(new FloatingText { text = t, world = world + Random.insideUnitSphere * 0.3f, color = color });
         }
 
-        void LateUpdate()
-        {
-            if (cam == null) cam = Camera.main;
-            if (cam == null) return;
-            for (int i = floating.Count - 1; i >= 0; i--)
-            {
-                var f = floating[i];
-                f.age += Time.unscaledDeltaTime;
-                if (f.age >= NumberLifetime)
-                {
-                    numbers.Release(f.text);
-                    floating.RemoveAt(i);
-                    continue;
-                }
-                f.text.transform.position = cam.WorldToScreenPoint(f.world + Vector3.up * (f.age * 1.5f));
-                float k = f.age / NumberLifetime;
-                Color c = f.color;
-                c.a = 1f - k * k;
-                f.text.color = c;
-                f.text.transform.localScale = Vector3.one * (1f + 0.5f * Mathf.Max(0f, 1f - f.age * 8f)); // pop
-            }
-        }
-
         // ---------- Camera / time ----------
 
         public void Shake(float amount)
@@ -159,5 +177,7 @@ namespace Survival
                 p.Init(pickups, player, playerHealth);
             }
         }
+
+        #endregion
     }
 }

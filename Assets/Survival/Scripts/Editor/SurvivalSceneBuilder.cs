@@ -18,11 +18,17 @@ namespace Survival.EditorTools
     /// </summary>
     public static class SurvivalSceneBuilder
     {
+        #region 변수
+
         const string Root = "Assets/Survival";
         const string ScenePath = Root + "/Scenes/Survival.unity";
         const float ArenaHalf = 25f;
 
         static Font font;
+
+        #endregion
+
+        #region 커스텀 메서드
 
         [MenuItem("Tools/Survival/Build Scene")]
         public static void Build()
@@ -530,5 +536,7 @@ namespace Survival.EditorTools
         {
             if (!AssetDatabase.IsValidFolder($"{parent}/{name}")) AssetDatabase.CreateFolder(parent, name);
         }
+
+        #endregion
     }
 }
